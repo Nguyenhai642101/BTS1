@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Creating Real-Time Charts with Flask</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
+    <style>
+        .box1 {
+            width:400px;
+            height:470px;
+            padding: 5px;
+            border:2px solid black;
+            positon: relative;
+            top : 1000px;
+            left: 0px;
+        }
+        .card{
+            width:1000px;
+            height:500px;
+        }
+        .container{
+            width:1000px;
+            height:500px;
+            position : relative;
+            left : 0px;
+            top : 0px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="canvas" height="50" width="100"></canvas>
+                    <canvas id="canvas1" height="50" width="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const config = {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: "m/s",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [],
+                    fill: false,
+                }],
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Biểu đồ vận tốc gió'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Time'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        }
+                    }]
+                }
+            }
+        };
+
+        const context = document.getElementById('canvas').getContext('2d');
+
+        const lineChart = new Chart(context, config);
+
+        const source = new EventSource("/chart-data");
+
+        source.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            if (config.data.labels.length === 1000) {
+                config.data.labels.shift();
+                config.data.datasets[0].data.shift();
+            }
+            config.data.labels.push(data.time);
+            config.data.datasets[0].data.push(data.toadox);
+            lineChart.update();
+            xcan = data.toadox;
+            
+        }
+    });
+</script>
+<div class="box1" > Các lực của dây co<br>
+    <ol>
+        <li>Lực Dây Co 1 :{{xcan}}</li></br>
+        <li>Lực Dây Co 2 :</li></br>
+        <li>Lực Dây Co 3 :</li></br>
+        <li>Lực Dây Co 4 :</li></br>
+        <li>Lực Dây Co 5 :</li></br>
+        <li>Lực Dây Co 6 :</li></br>
+        <li>Lực Dây Co 7 :</li></br>
+        <li>Lực Dây Co 8 :</li></br>
+        <li>Lực Dây Co 9 :</li></br>
+    </ol>
+</div>
+</body>
+</html>
+<script>
+    setInterval(function() {
+      fetch('/chart-data').then(
+        response => response.json()
+      ).then(
+        data =>
+          data.forEach(match =>
+            updateElement(match)
+          )
+      )
+    }, 3000
+  );
+
+function updateElement(match) {
+    Object.entries(match).forEach(([k,v]) => {
+        element = document.getElementById(k + "_" + match.id);
+        // Get Previous value first
+        previousValue = element.innerHTML;
+
+        // If Previous value is not equal to the new value, change it!
+        if (previousValue !== v.toString()) {
+            blinkUpdate(element, v.toString())
+        }
+    })
+}
+
+function blinkUpdate(element, newValue, newColor='#00ff00') {
+    previousColor = element.style.color;
+    element.innerHTML = newValue;
+    element.style.color = newColor;
+    // Set back to original color after timeout ms
+    setTimeout(() => {
+        element.style.color = previousColor
+    }, 2000)
+}
+
+</script>

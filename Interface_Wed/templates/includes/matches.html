@@ -1,0 +1,30 @@
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Location</th>
+      <th scope="col">Coordinates</th>
+      <th scope="col">     </th>
+    </tr>
+  </thead>
+  <tbody id="table_body">
+    {% for match in matches %}
+      <tr>
+        <td id="id_{{ match.id }}">{{ match.id }}</td>
+        <td id="Name_{{ match.id }}">{{ match.Name }}</td>
+        <td id="Location_{{ match.id }}">{{ match.Location }}</td>
+        <td id="Coordinates_{{ match.id }}">{{ match.Coordinates }}</td>
+        <td>
+<!--          <button style="color : white; border-color : green; background-color: gray" class="Btn" > Detail</button>-->
+          <a class = "btn1" href="http://127.0.0.1:6868/cot1"  style="color : white; border-color : green" >Detail</a>
+<!--          <a class = "btn2" href="http://127.0.0.1:6868/cot2"  style="color : white; border-color : green" >Detail</a>-->
+        </td>
+
+      </tr>
+    {% endfor %}
+<!--    <a class = "btn1" href="http://127.0.0.1:6868/cot1"  style="color : white; border-color : green" >Detail</a>-->
+<!--    <a class = "btn2" href="http://127.0.0.1:6868/cot2"  style="color : white; border-color : green" >Detail</a>-->
+  </tbody>
+</table>
+
