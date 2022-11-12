@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <title>Creating Real-Time Charts with Flask</title>
+    <title>COT 2</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
+    <link href="http://127.0.0.1:6868/test">
     <style>
         .box1 {
             width:400px;
             height:470px;
             padding: 5px;
             border:2px solid black;
-            positon: relative;
+            positon: absolutely;
             top : 1000px;
             left: 0px;
         }
@@ -26,21 +28,90 @@
             left : 0px;
             top : 0px;
         }
+
+
+
     </style>
+
+
+    <script>
+        const source = new EventSource("/chart-data");
+        function myFunction(){
+        source.onmessage = function (event) {
+            var xcan;
+
+            const data = JSON.parse(event.data);
+
+            F1 = data.F1;
+            F2 = data.F2;
+            F3 = data.F3;
+            F4 = data.F4;
+            F5 = data.F5;
+            F6 = data.F6;
+            F7 = data.F7;
+            F8 = data.F8;
+            F9 = data.F9;
+<!--            console.log(xcan);-->
+            document.getElementById("F1").innerHTML= F1 ;
+            document.getElementById("F2").innerHTML= F2 ;
+            document.getElementById("F3").innerHTML= F3 ;
+            document.getElementById("F4").innerHTML= F4 ;
+            document.getElementById("F5").innerHTML= F5 ;
+            document.getElementById("F6").innerHTML= F6 ;
+            document.getElementById("F7").innerHTML= F7 ;
+            document.getElementById("F8").innerHTML= F8 ;
+            document.getElementById("F9").innerHTML= F9 ;
+        }
+        }
+
+
+
+    </script>
+
+
 </head>
-<body>
+<body onload=" myFunction() ">
+
+
 <div class="container">
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <canvas id="canvas" height="50" width="100"></canvas>
-                    <canvas id="canvas1" height="50" width="100"></canvas>
+                    <canvas id="canvas" style="height = 50px, width=100px"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<br>
+<br>
+<br>
+
+<div class="box1"> Các lực của dây co<br>
+    <ol>
+        <br>
+        <li>Lực Dây Co 1 : <span id="F1"></span></li>
+        </br>
+        <li>Lực Dây Co 2 : <span id="F2"></span></li>
+        </br>
+        <li>Lực Dây Co 3 : <span id="F3"></span></li>
+        </br>
+        <li>Lực Dây Co 4 : <span id="F4"></span></li>
+        </br>
+        <li>Lực Dây Co 5 : <span id="F5"></span></li>
+        </br>
+        <li>Lực Dây Co 6 : <span id="F6"></span></li>
+        </br>
+        <li>Lực Dây Co 7 : <span id="F7"></span></li>
+        </br>
+        <li>Lực Dây Co 8 : <span id="F8"></span></li>
+        </br>
+        <li>Lực Dây Co 9 : <span id="F9"></span></li>
+        </br>
+    </ol>
+</div>
+
 <!--suppress JSUnresolvedLibraryURL -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <!--suppress JSUnresolvedLibraryURL -->
@@ -107,29 +178,14 @@
                 config.data.datasets[0].data.shift();
             }
             config.data.labels.push(data.time);
-            config.data.datasets[0].data.push(data.toadox);
+            config.data.datasets[0].data.push(data.speed);
             lineChart.update();
-            xcan = data.toadox;
-            
         }
     });
-</script>
-<div class="box1" > Các lực của dây co<br>
-    <ol>
-        <li>Lực Dây Co 1 :{{xcan}}</li></br>
-        <li>Lực Dây Co 2 :</li></br>
-        <li>Lực Dây Co 3 :</li></br>
-        <li>Lực Dây Co 4 :</li></br>
-        <li>Lực Dây Co 5 :</li></br>
-        <li>Lực Dây Co 6 :</li></br>
-        <li>Lực Dây Co 7 :</li></br>
-        <li>Lực Dây Co 8 :</li></br>
-        <li>Lực Dây Co 9 :</li></br>
-    </ol>
-</div>
-</body>
-</html>
-<script>
+
+
+
+
     setInterval(function() {
       fetch('/chart-data').then(
         response => response.json()
@@ -165,4 +221,13 @@ function blinkUpdate(element, newValue, newColor='#00ff00') {
     }, 2000)
 }
 
+
+
 </script>
+<br>
+<br>
+<br>
+
+</body>
+</html>
+

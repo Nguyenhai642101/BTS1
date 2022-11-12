@@ -1,6 +1,6 @@
 import json
 import time
-from datetime import datetime
+import datetime
 from flask import Flask, render_template, request, jsonify, stream_with_context, Response
 from download_data_from_firebase import *
 
@@ -25,6 +25,11 @@ def getData():  # Retrieve data from database
 
 # main route
 @app.route("/")
+def indexBegin():
+    return render_template('indexBegin.html')
+
+
+@app.route("/data_analysis")
 def index():
     dummy_data = data_json()
     return render_template('indexBTS.html', matches=dummy_data.json)
@@ -67,18 +72,20 @@ def infor2():
 
 @app.route('/chart-data')
 def chart_data():
-    def generate_random_data():
+    def generate_data():
         while True:
             x, y, z, v, t = downloadData()
+            F1, F2, F3, F4, F5, F6, F7, F8, F9 = calculator()
             json_data = json.dumps(
-                {'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'value': v, 'toadox': x, 'toadoy': y,
-                 'toadoz': z})
+                {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'speed': v, 'F1': F1, 'F2': F2,
+                 'F3': F3, 'F4': F4, 'F5': F5, 'F6': F6, 'F7': F7, 'F8': F8, 'F9': F9,
+                 'x': x, 'y': y, 'z': z})
             yield f"data:{json_data}\n\n"
-            time.sleep(1)
+            time.sleep(4.6)
 
-    response = Response(stream_with_context(generate_random_data()), mimetype="text/event-stream")
-    response.headers["Cache-Control"] = "no-cache"
-    response.headers["X-Accel-Buffering"] = "no"
+    response = Response(stream_with_context(generate_data()), mimetype="text/event-stream")
+    # response.headers["Cache-Control"] = "no-cache"
+    # response.headers["X-Accel-Buffering"] = "no"
     # print(response)
     return response
 

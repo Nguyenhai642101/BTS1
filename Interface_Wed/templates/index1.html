@@ -1,24 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>BTS</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/style1.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+
+        .box1 {
+            width:400px;
+            height:470px;
+            padding: 5px;
+            border:2px solid black;
+            positon: relative;
+            top : 1000px;
+            left: 100px;
+        }
+        .card{
+            width:1000px;
+            height:500px;
+        }
+        .container{
+            width:1000px;
+            height:500px;
+            position : relative;
+            left : 0px;
+            top : 0px;
+        }
+        .box2{
+            width:400px;
+            height:250px;
+            padding:5px;
+            border: 2px solid black;
+            position:absolutely;
+        }
+        .box{
+            display: grid;
+            border: solid 1px #1D1E2C;
+            grid-template-columns: repeat(3, 600px);
+            grid-gap: 20px;
+            justify-content: ***;
+        }
+
+
+    </style>
+    <script>
+        const source = new EventSource("/chart-data");
+        function myFunction(){
+        source.onmessage = function (event) {
+
+            const data = JSON.parse(event.data);
+
+            F1 = data.F1;
+            F2 = data.F2;
+            F3 = data.F3;
+            F4 = data.F4;
+            F5 = data.F5;
+            F6 = data.F6;
+            F7 = data.F7;
+            F8 = data.F8;
+            F9 = data.F9;
+            x = data.x;
+            y = data.y;
+            z = data.z;
+<!--            console.log(xcan);-->
+            document.getElementById("F1").innerHTML= F1 ;
+            document.getElementById("F2").innerHTML= F2 ;
+            document.getElementById("F3").innerHTML= F3 ;
+            document.getElementById("F4").innerHTML= F4 ;
+            document.getElementById("F5").innerHTML= F5 ;
+            document.getElementById("F6").innerHTML= F6 ;
+            document.getElementById("F7").innerHTML= F7 ;
+            document.getElementById("F8").innerHTML= F8 ;
+            document.getElementById("F9").innerHTML= F9 ;
+            document.getElementById("x").innerHTML= x ;
+            document.getElementById("y").innerHTML= y ;
+            document.getElementById("z").innerHTML= z ;
+        }
+        }
+
+
+    </script>
+
 </head>
-<body>
+<body onload=" myFunction() ">
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div class="card" >
-                <div class="card-body" >
-                    <canvas id="canvas" > Information</canvas>
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="canvas"> Information</canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div>x : {{name}}</div>
+
+
+<br>
+
+
+<div class="box">
+    <div class="box1"> Các lực của dây co<br>
+        <ol>
+            <br>
+            <li>Lực Dây Co 1 : <span id="F1"></span></li>
+            </br>
+            <li>Lực Dây Co 2 : <span id="F2"></span></li>
+            </br>
+            <li>Lực Dây Co 3 : <span id="F3"></span></li>
+            </br>
+            <li>Lực Dây Co 4 : <span id="F4"></span></li>
+            </br>
+            <li>Lực Dây Co 5 : <span id="F5"></span></li>
+            </br>
+            <li>Lực Dây Co 6 : <span id="F6"></span></li>
+            </br>
+            <li>Lực Dây Co 7 : <span id="F7"></span></li>
+            </br>
+            <li>Lực Dây Co 8 : <span id="F8"></span></li>
+            </br>
+            <li>Lực Dây Co 9 : <span id="F9"></span></li>
+            </br>
+        </ol>
+    </div>
+
+    <div class="box2"> Tọa độ chuyển vị của cột tại vị trí cao nhất <br>
+        <ol>
+            <li> X : <span id="x"></span></li>
+            </br>
+            <li> Y : <span id="y"></span></li>
+            </br>
+            <li> Z : <span id="z"></span></li>
+            </br>
+
+        </ol>
+    </div>
+</div>
+
 <!--suppress JSUnresolvedLibraryURL -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <!--suppress JSUnresolvedLibraryURL -->
@@ -80,15 +201,17 @@
 
         source.onmessage = function (event) {
             const data = JSON.parse(event.data);
-            if (config.data.labels.length === 10) {
+            if (config.data.labels.length === 30) {
                 config.data.labels.shift();
                 config.data.datasets[0].data.shift();
             }
             config.data.labels.push(data.time);
-            config.data.datasets[0].data.push(data.value);
+            config.data.datasets[0].data.push(data.speed);
             lineChart.update();
         }
     });
+
+
 
 
 
@@ -131,5 +254,18 @@ function blinkUpdate(element, newValue, newColor='#00ff00') {
         element.style.color = previousColor
     }, 2000)
 }
+
+
 </script>
+ <nav>
+     <div class="brand">
+         <h2>ME_645</h2>
+     </div>
+     <ul>
+         <li><a href="http://127.0.0.1:6868"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+         <li><a href=""><i class="fa fa-info" aria-hidden="true"></i> Information </a></li>
+         <li><a href="http://127.0.0.1:6868/data_analysis "><i class="fa fa-truck" aria-hidden="true"></i> Data Analysis</a></li>
+         <li><a href=""><i class="fa fa-location-arrow" aria-hidden="true"></i> Address</a></li>
+     </ul>
+ </nav>
 

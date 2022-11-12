@@ -9,22 +9,34 @@
     </tr>
   </thead>
   <tbody id="table_body">
-    {% for match in matches %}
       <tr>
-        <td id="id_{{ match.id }}">{{ match.id }}</td>
-        <td id="Name_{{ match.id }}">{{ match.Name }}</td>
-        <td id="Location_{{ match.id }}">{{ match.Location }}</td>
-        <td id="Coordinates_{{ match.id }}">{{ match.Coordinates }}</td>
-        <td>
-<!--          <button style="color : white; border-color : green; background-color: gray" class="Btn" > Detail</button>-->
-          <a class = "btn1" href="http://127.0.0.1:6868/cot1"  style="color : white; border-color : green" >Detail</a>
-<!--          <a class = "btn2" href="http://127.0.0.1:6868/cot2"  style="color : white; border-color : green" >Detail</a>-->
-        </td>
-
+          <td id="id_1">1</td>
+          <td id="Name_1">BTS1</td>
+          <td id="Location_1">C1 - ĐHBK</td>
+          <td id="Coordinates_1">(20.4213, 204.3211) </td>
+          <td>
+              <a class="btn1" href="http://127.0.0.1:6868/cot1" style="color : white; border-color : green">Detail</a>
+          </td>
       </tr>
-    {% endfor %}
-<!--    <a class = "btn1" href="http://127.0.0.1:6868/cot1"  style="color : white; border-color : green" >Detail</a>-->
-<!--    <a class = "btn2" href="http://127.0.0.1:6868/cot2"  style="color : white; border-color : green" >Detail</a>-->
+      <tr>
+          <td id="id_2">2</td>
+          <td id="Name_2">BTS2</td>
+          <td id="Location_2">C2 - ĐHBK</td>
+          <td id="Coordinates_2">(21.2452, 203.4953) </td>
+          <td>
+              <a class="btn1" href="http://127.0.0.1:6868/cot2" style="color : white; border-color : green">Detail</a>
+          </td>
+      </tr>
+      <tr>
+           <td id="id_3">3</td>
+          <td id="Name_3">BTS3</td>
+          <td id="Location_3">C3 - ĐHBK</td>
+          <td id="Coordinates_3">(22.3454, 202.5324) </td>
+          <td>
+              <a class="btn1" href="http://127.0.0.1:6868/cot2" style="color : white; border-color : green">Detail</a>
+          </td>
+      </tr>
+
   </tbody>
 </table>
 
