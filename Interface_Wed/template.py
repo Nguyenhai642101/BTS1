@@ -76,10 +76,11 @@ def chart_data():
         while True:
             x, y, z, v, t = downloadData()
             F1, F2, F3, F4, F5, F6, F7, F8, F9 = calculator()
+            status = calculatorWarn()
             json_data = json.dumps(
                 {'time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'speed': v, 'F1': F1, 'F2': F2,
                  'F3': F3, 'F4': F4, 'F5': F5, 'F6': F6, 'F7': F7, 'F8': F8, 'F9': F9,
-                 'x': x, 'y': y, 'z': z})
+                 'x': x, 'y': y, 'z': z, 'status': status})
             yield f"data:{json_data}\n\n"
             time.sleep(4.6)
 

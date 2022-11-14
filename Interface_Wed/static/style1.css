@@ -9,9 +9,10 @@ section.section1{
      box-sizing: border-box;
      background: url(https://res.cloudinary.com/dn4nxz7f0/image/upload/v1603170394/navigation_trong_suot/pexels-life-of-pix-7919_zydtt2.jpg);
      background-size: cover;
+     /* background: url(https://drive.google.com/file/d/N-z1Lx8BRbupf3W_s2C4iG6qTb87B/view?usp=sharing); */
  }
  nav{
-     position: fixed;
+     position: relative;
      top: 0;
      left: 0;
      width: 100%;

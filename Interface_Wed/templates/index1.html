@@ -7,17 +7,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/style1.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
 
-        .box1 {
-            width:400px;
-            height:470px;
-            padding: 5px;
-            border:2px solid black;
-            positon: relative;
-            top : 1000px;
-            left: 100px;
-        }
         .card{
             width:1000px;
             height:500px;
@@ -27,23 +19,68 @@
             height:500px;
             position : relative;
             left : 0px;
-            top : 0px;
+            top : 80px;
+
+        }
+
+        .box{
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-gap: 20px;
+            justify-content: ***;
+            top : 120px;
+            position: relative;
+            background-Color: #EEEEEE;
+            padding: 30px;
+            padding-left: 20%;
+        }
+
+        .box1 {
+            width:400px;
+            height:470px;
+            padding: 5px;
+            border:2px solid black;
+            positon: relative;
+            left: 20%;
+            background-Color: aquamarine;
         }
         .box2{
             width:400px;
             height:250px;
             padding:5px;
             border: 2px solid black;
-            position:absolutely;
-        }
-        .box{
-            display: grid;
-            border: solid 1px #1D1E2C;
-            grid-template-columns: repeat(3, 600px);
-            grid-gap: 20px;
-            justify-content: ***;
+            position:relative;
+            background-color: aquamarine;
+
         }
 
+        .infor{
+             height: auto;
+             padding: 30px;
+             display: grid;
+             grid-template-columns: 150px 500px;
+             gap:20px;
+             background-color: #EEEEEE;
+             left: 30px;
+             padding-left: 30%;
+             font-size: 24px;
+        }
+        .item1{
+            box-sizing: border-box;
+            padding: 50px;
+            background-Color: aquamarine;
+
+
+        }
+
+        .item2{
+            box-sizing: border-box;
+            padding: 30px;
+            background-Color: #FFCC00;
+            float: left
+            text-align: justify;
+
+        }
 
     </style>
     <script>
@@ -78,14 +115,40 @@
             document.getElementById("x").innerHTML= x ;
             document.getElementById("y").innerHTML= y ;
             document.getElementById("z").innerHTML= z ;
+            document.getElementById("status").innerHTML = status;
         }
         }
+
 
 
     </script>
 
 </head>
 <body onload=" myFunction() ">
+
+<nav>
+    <div class="brand">
+        <h2>ME_645</h2>
+    </div>
+    <ul>
+        <li><a href="http://127.0.0.1:6868"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+        <li><a href=""><i class="fa fa-info" aria-hidden="true"></i> Information </a></li>
+        <li><a href="http://127.0.0.1:6868/data_analysis "><i class="fa fa-truck" aria-hidden="true"></i> Data Analysis</a>
+        </li>
+        <li><a href=""><i class="fa fa-location-arrow" aria-hidden="true"></i> Address</a></li>
+    </ul>
+</nav>
+
+<div class="infor">
+    <div class="item1"> No.1</div>
+    <div class="item2">
+        Address: C1-ĐHBK <br>
+        Coordinates: (20.4213, 204.3211) <br>
+        Status : <span id="status"></span> <br>
+    </div>
+</div>
+
+
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -216,6 +279,7 @@
 
 
 
+
 </script>
 </body>
 </html>
@@ -256,16 +320,7 @@ function blinkUpdate(element, newValue, newColor='#00ff00') {
 }
 
 
+
 </script>
- <nav>
-     <div class="brand">
-         <h2>ME_645</h2>
-     </div>
-     <ul>
-         <li><a href="http://127.0.0.1:6868"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-         <li><a href=""><i class="fa fa-info" aria-hidden="true"></i> Information </a></li>
-         <li><a href="http://127.0.0.1:6868/data_analysis "><i class="fa fa-truck" aria-hidden="true"></i> Data Analysis</a></li>
-         <li><a href=""><i class="fa fa-location-arrow" aria-hidden="true"></i> Address</a></li>
-     </ul>
- </nav>
+
 

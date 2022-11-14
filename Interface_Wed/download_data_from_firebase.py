@@ -37,37 +37,37 @@ def downloadData():
     v = vanToc.val()
     t0 = huongGio.val()
 
-    x = x0 * math.pi / 180
-    y = y0 * math.pi / 180
-    z = z0 * math.pi / 180
+    x = l * sin((y0 / 180) * math.pi)
+    y = l * sin((x0 / 180) * math.pi)
+    z = l - l * cos((x0 / 180) * math.pi)
 
-    if (t0 >= 0 and t0 < 45):
+    if (t0 >= 4 and t0 < 6.2857):
         t = 'B'
-    elif (45 <= t0 and t0 < 90):
+    elif (6.2857 <= t0 and t0 < 8.5714):
         t = 'DB'
-    elif (90 <= t0 and t0 < 135):
+    elif (8.5714 <= t0 and t0 < 10.8571):
         t = 'D'
-    elif (135 <= t0 and t0 < 180):
+    elif (10.8571 <= t0 and t0 < 13.1429):
         t = 'DN'
-    elif (180 <= t0 and t0 < 225):
+    elif (13.1429 <= t0 and t0 < 15.4286):
         t = 'N'
-    elif (225 <= t0 and t0 < 270):
+    elif (15.4286 <= t0 and t0 < 17.7143):
         t = 'TN'
-    elif (270 <= t0 and t0 < 315):
+    elif (17.7143 <= t0 and t0 < 20):
         t = 'T'
-    elif (315 <= t0 and t0 <= 360):
+    else:
         t = 'TB'
 
-    return x, y, z, v, t
+    return round(x, 3), round(y, 3), round(z, 3), round(v, 3), t
 
 
 def calculator():
     x, y, z, v, t = downloadData()
 
     # cần phải xác định được lực dựa vào tốc độ gió
-    Fc1 = v  # do gió tác dụng phân bố không đều => tìm độ lớn lực theo độ cao
-    Fc2 = 0.8 * v
-    Fc3 = 0.5 * v
+    Fc1 = 10 * v  # do gió tác dụng phân bố không đều => tìm độ lớn lực theo độ cao
+    Fc2 = 8 * v
+    Fc3 = 5 * v
 
     # Góc giữa dây co và cột BTS
     anpha0 = math.atan(5 / (l - 3))
@@ -146,12 +146,24 @@ def calculator():
     Nz8 = F8 * cos(beta2)
     Nz9 = F9 * cos(beta2)
 
-    return round(Nz1, 2), round(Nz2, 2), round(Nz3, 2), round(Nz4, 2), round(Nz5, 2), round(Nz6, 2), round(Nz7, 2), \
-           round(Nz8, 2), round(Nz9, 2)
+    return abs(round(Nz1, 2)), abs(round(Nz2, 2)), abs(round(Nz3, 2)), abs(round(Nz4, 2)), abs(round(Nz5, 2)), abs(
+        round(Nz6, 2)), abs(round(Nz7, 2)), \
+           abs(round(Nz8, 2)), abs(round(Nz9, 2))
 
 
 def calculatorCoor():
     pass
+
+
+def calculatorWarn():
+    x, y, z, v, t = downloadData()
+    F1, F2, F3, F4, F5, F6, F7, F8, F9 = calculator()
+    status = 'Normal'
+    if (v > 32 and ((F1 > 51) or (F2 > 51) or (F3 > 51) or (F4 > 51) or (F5 > 51) or (F6 > 51))):
+        status = 'Warning'
+    else:
+        status = 'Normal'
+    return status
 
     # print(anpha)
     # print(status)  # push data len firebase luon chu khong return nua sua do dung threading
@@ -194,10 +206,14 @@ def calculatorCoor():
 # while True:
 #     x, y, z, v, t = downloadData()
 #     print(x, y, z, v, t)
-#     time.sleep(4.6)
+#     time.sleep(3)
 
 # while True:
 #     F1, F2, F3, F4, F5, F6, F7, F8, F9 = calculator()
+#     status = calculatorWarn()
+#     print(status)
 #     print(F1, F2, F3, F4, F5, F6, F7, F8, F9)
 #     time.sleep(5)
 # print(datetime.datetime.now())
+
+
